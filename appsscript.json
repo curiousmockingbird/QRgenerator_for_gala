@@ -1,0 +1,25 @@
+{
+  "timeZone": "America/Chicago",
+  "dependencies": {
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "sheets": {
+    "macros": [{
+      "menuName": "onEdit",
+      "functionName": "onEdit"
+    }, {
+      "menuName": "sendEmailWithQRCode",
+      "functionName": "sendEmailWithQRCode"
+    }, {
+      "menuName": "generateQRCodeUrl",
+      "functionName": "generateQRCodeUrl"
+    }, {
+      "menuName": "getRowData",
+      "functionName": "getRowData"
+    }, {
+      "menuName": "processSheet",
+      "functionName": "processSheet"
+    }]
+  }
+}
