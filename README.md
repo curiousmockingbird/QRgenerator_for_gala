@@ -28,8 +28,6 @@ This script automates creating QR codes in Google Sheets and sending them via em
 - **Email** (`Column K`, index **11**)  
 - **QR Code** (last column in the sheet)
 
-> *Note:* Adjust the column indices based on your actual sheet layout.
-
 ---
 
 ## Key Functions
@@ -52,27 +50,3 @@ This script automates creating QR codes in Google Sheets and sending them via em
 - Embeds the **QR code** image in the email body.  
 - Includes relevant guest/event info.
 
----
-
-## Setup
-
-1. **Add Script to Sheet**  
-   - Go to **Extensions → Apps Script**.  
-   - Paste in your code, or use a deployment flow (Clasp + GitHub, etc.).
-
-2. **Check Triggers**  
-   - By default, `onEdit(e)` is a simple trigger.  
-   - If needed, set up an **installable** trigger under **Triggers** in Apps Script for advanced permissions.
-
-3. **Authorize and Test**  
-   - Upon the first run, grant the necessary permissions to send emails.  
-   - Edit a row (with an email in the correct column) and verify a QR code is generated in the last column.  
-   - You should also receive the email with the embedded QR code.
-
----
-
-## Notes
-
-- The script sends emails through **MailApp**. Ensure the “From” address (e.g., `Danielle@voces-wi.org`) is correct and authorized.  
-- You can easily **adjust column indices** if your sheet layout differs.  
-- The external QR code API is free to use but **publicly accessible**. Verify that any data transmitted (e.g., ID, ticket info) meets your privacy requirements.
