@@ -1,55 +1,78 @@
-Automatic QR Code Generation & Email (Google Apps Script)
+# Automatic QR Code Generation & Email (Google Apps Script)
 
-This script automates creating QR codes in Google Sheets and sending them via email. It’s designed for event registrations (like a gala), where each row represents a guest.
-How It Works
+This script automates creating QR codes in Google Sheets and sending them via email. It’s primarily designed for event registrations (e.g., a gala), where each row in the sheet represents a guest.
 
-    Trigger: The onEdit(e) function runs automatically whenever you edit the sheet.
-    Processing:
-        If a row contains an email address but no QR code (in the last column), the script will generate one.
-        It uses a third-party API (api.qrserver.com) to generate the QR code image URL.
-        It writes an =IMAGE("...") formula into the last column, so the QR code image appears.
-    Email:
-        The script sends an HTML email (sendEmailWithQRCode) that embeds the newly generated QR code and includes event details.
+---
 
-Important Columns (Sheet Layout)
+## How It Works
 
-    ID (Column A, index 1)
-    Name (Column B, index 2)
-    Last Name (Column D, index 4)
-    Ticket (Column G, index 7)
-    Email (Column K, index 11)
-    QR Code (Last column in the sheet)
+1. **Trigger**  
+   The `onEdit(e)` function runs automatically whenever you edit the sheet.
 
-Key Functions
+2. **Processing**  
+   - If a row contains an **email address** but **no QR code** (in the last column), the script will generate one.  
+   - It uses a third-party API ([api.qrserver.com](https://goqr.me/api/)) to generate the QR code image URL.  
+   - It writes an `=IMAGE("...")` formula into the **last column**, so the QR code image is displayed directly in the cell.
 
-    onEdit(e)
-        Main trigger, calls processSheet() whenever the sheet is edited.
+3. **Email**  
+   - The script sends an **HTML email** (via `sendEmailWithQRCode`) embedding the newly generated QR code and providing relevant event details.
 
-    processSheet()
-        Loops through rows, checks for a missing QR code in rows that have an email, then generates a code and calls sendEmailWithQRCode().
+---
 
-    generateQRCodeUrl(data)
-        Constructs a QR code URL using the api.qrserver.com service.
+## Important Columns (Sheet Layout)
 
-    sendEmailWithQRCode(email, name, lastName, id, ticket, qrUrl)
-        Sends an HTML email with the QR code image and relevant event/guest info.
+- **ID** (`Column A`, index **1**)  
+- **Name** (`Column B`, index **2**)  
+- **Last Name** (`Column D`, index **4**)  
+- **Ticket** (`Column G`, index **7**)  
+- **Email** (`Column K`, index **11**)  
+- **QR Code** (last column in the sheet)
 
-Setup
+> *Note:* Adjust the column indices based on your actual sheet layout.
 
-    Add Script to Sheet
-        Go to Extensions → Apps Script.
-        Paste in the code (or use Clasp + GitHub).
+---
 
-    Check Triggers
-        By default, onEdit(e) is a simple trigger.
-        If needed, set up an installable trigger under Triggers in Apps Script.
+## Key Functions
 
-    Authorize and Test
-        Upon first run, grant permission to send emails.
-        Edit a row (with an email in the correct column) and see if a QR code is generated.
+### `onEdit(e)`
+- A simple trigger that fires on every sheet edit.  
+- Calls `processSheet()` whenever changes occur.
 
-Notes
+### `processSheet()`
+- Loops through rows in the active sheet.  
+- Checks if a row has an **email** but **no QR code**.  
+- Generates the QR code (if needed) and calls `sendEmailWithQRCode()`.
 
-    The script sends emails through MailApp; ensure the address Danielle@voces-wi.org or your chosen “From” address is authorized and correct.
-    You can adjust column indices if your sheet layout differs.
-    The external QR code API is free but publicly reachable—check any data privacy needs before use.
+### `generateQRCodeUrl(data)`
+- Constructs a QR code URL using the **api.qrserver.com** service.  
+- Returns the image link to be embedded into the sheet cell or email.
+
+### `sendEmailWithQRCode(email, name, lastName, id, ticket, qrUrl)`
+- Sends an HTML email (via `MailApp.sendEmail`)  
+- Embeds the **QR code** image in the email body.  
+- Includes relevant guest/event info.
+
+---
+
+## Setup
+
+1. **Add Script to Sheet**  
+   - Go to **Extensions → Apps Script**.  
+   - Paste in your code, or use a deployment flow (Clasp + GitHub, etc.).
+
+2. **Check Triggers**  
+   - By default, `onEdit(e)` is a simple trigger.  
+   - If needed, set up an **installable** trigger under **Triggers** in Apps Script for advanced permissions.
+
+3. **Authorize and Test**  
+   - Upon the first run, grant the necessary permissions to send emails.  
+   - Edit a row (with an email in the correct column) and verify a QR code is generated in the last column.  
+   - You should also receive the email with the embedded QR code.
+
+---
+
+## Notes
+
+- The script sends emails through **MailApp**. Ensure the “From” address (e.g., `Danielle@voces-wi.org`) is correct and authorized.  
+- You can easily **adjust column indices** if your sheet layout differs.  
+- The external QR code API is free to use but **publicly accessible**. Verify that any data transmitted (e.g., ID, ticket info) meets your privacy requirements.
