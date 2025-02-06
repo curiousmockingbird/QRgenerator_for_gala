@@ -72,7 +72,7 @@ function sendEmailWithQRCode(emailAddress, name, lastName, id, ticket, qrCodeUrl
     to: emailAddress,
     subject: subject,
     htmlBody: body,
-    from: 'Danielle@voces-wi.org' // Replace with your alias email address
+    from: 'Danielle@voces-wi.org'
   };
 
   try {
